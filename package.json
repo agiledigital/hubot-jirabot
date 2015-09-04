@@ -1,9 +1,9 @@
 {
-  "name": "hubot",
+  "name": "hubot-jirabot",
   "version": "0.0.0",
   "private": true,
   "author": "Hasan Nizamani <hxnizamani@agiledigital.com.au>",
-  "description": "A simple helpful robot for your Company",
+  "description": "Fetches JIRA Issues",
   "dependencies": {
     "hubot": "^2.16.0",
     "hubot-diagnostics": "0.0.1",
