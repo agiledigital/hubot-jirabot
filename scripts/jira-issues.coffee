@@ -71,7 +71,14 @@ module.exports = (robot) ->
                 message += ', unassigned'
               message += ", rep. by "+json.fields.reporter.displayName
               if json.fields.fixVersions and json.fields.fixVersions.length > 0
-                message += ', fixVersion: '+json.fields.fixVersions[0].name
+                message += ', fixVersions: '
+                index = 1
+                for fixVersion in json.fields.fixVersions
+                  if(index == json.fields.fixVersions.length)
+                    message += fixVersion.name
+                  else
+                    message += fixVersion.name + ', '
+                  index++
               else
                 message += ', fixVersion: NONE'
 
