@@ -16,7 +16,7 @@
 # Commands:
 #
 # Author:
-#   stuartf
+#   hxnizamani
 
 module.exports = (robot) ->
   cache = []
