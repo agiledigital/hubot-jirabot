@@ -47,8 +47,6 @@ module.exports = (robot) ->
 
       msg.send item.message for item in cache when item.issue is issue
 
-      console.log("issue key matched, going to fetch the issue")
-
       if cache.length == 0 or (item for item in cache when item.issue is issue).length == 0
         robot.http(jiraUrl + "/rest/api/2/issue/" + issue)
           .auth(auth)
