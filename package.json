@@ -1,7 +1,7 @@
 {
   "name": "hubot-jirabot",
   "description": "A hubot script to fetch JIRA issues",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Hasan Nizamani <hxnizamani@agiledigital.com.au>",
   "keywords": [
     "hubot",
