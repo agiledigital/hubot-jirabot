@@ -35,7 +35,8 @@ module.exports = (robot) ->
     jiraIgnoreUsers = "jira|github"
 
   robot.hear /.*\b(([A-Za-z]+)-[\d]+)\b.*/, (msg) ->
-    return if msg.message.user.name.match(new RegExp(jiraIgnoreUsers, "gi"))
+    # ignore if the user exists in 'jiraIgnoreUsers' or if the use is a bot (we don't want bots talking to each other. Bot fights are ugly)
+    return if msg.message.user.name.match(new RegExp(jiraIgnoreUsers, "gi")) || msg.message.user.name.toLowerCase().indexOf("bot") > -1
     getIssues(msg)
 
   getIssues = (msg) ->
@@ -45,8 +46,10 @@ module.exports = (robot) ->
       if cache.length > 0
         cache.shift() until cache.length is 0 or cache[0].expires >= now
 
+      # Fetching and posting Issue details via cache
       msg.send item.message for item in cache when item.issue is issue
 
+      # If cache is empty or if the issue id does not exists in the cache, fetch via REST API
       if cache.length == 0 or (item for item in cache when item.issue is issue).length == 0
         robot.http(jiraUrl + "/rest/api/2/issue/" + issue)
           .auth(auth)
@@ -91,8 +94,8 @@ module.exports = (robot) ->
               cache.push({issue: issue, expires: now + 120000, message: message})
             catch error
               try
-                msg.send "[*ERROR*] " + json.errorMessages[0]
+                console.log("[*ERROR*] " + json.errorMessages[0])
               catch reallyError
-                msg.send "[*ERROR*] " + reallyError
+                console.log("[*ERROR*] " + reallyError)
     catch error
-        msg.send "[*ERROR*] " + error
+      console.log("[*ERROR*] " + error)
