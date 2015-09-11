@@ -35,8 +35,8 @@ module.exports = (robot) ->
     jiraIgnoreUsers = "jira|github"
 
   robot.hear /.*\b(([A-Za-z]+)-[\d]+)\b.*/, (msg) ->
-    # ignore if the user exists in 'jiraIgnoreUsers' or if the use is a bot (we don't want bots talking to each other. Bot fights are ugly)
-    return if msg.message.user.name.match(new RegExp(jiraIgnoreUsers, "gi")) || msg.message.user.name.toLowerCase().indexOf("bot") > -1
+    # ignore if the user exists in 'jiraIgnoreUsers'
+    return if msg.message.user.name.match(new RegExp(jiraIgnoreUsers, "gi"))
     getIssues(msg)
 
   getIssues = (msg) ->
