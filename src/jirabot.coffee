@@ -18,6 +18,14 @@
 # Author:
 #   hxnizamani
 
+RegExp::execAll = (string) ->
+  matches = []
+  @lastIndex = 0
+  while match = @exec string
+    console.log(match)
+    matches.push(match)
+  return matches
+
 module.exports = (robot) ->
   cache = []
 
@@ -37,7 +45,13 @@ module.exports = (robot) ->
   robot.hear /.*\b(([A-Za-z]+)-[\d]+)\b.*/, (msg) ->
     # ignore if the user exists in 'jiraIgnoreUsers'
     return if msg.message.user.name.match(new RegExp(jiraIgnoreUsers, "gi"))
-    getIssues(msg)
+
+    matchAllRegexp = /\b(([A-Za-z]+)-[\d]+)\b/gi
+
+    for match in matchAllRegexp.execAll(msg.message.text)
+      console.log(match)
+      msg.match = match
+      getIssues(msg)
 
   getIssues = (msg) ->
     try
