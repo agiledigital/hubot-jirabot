@@ -22,7 +22,6 @@ RegExp::execAll = (string) ->
   matches = []
   @lastIndex = 0
   while match = @exec string
-    console.log(match)
     matches.push(match)
   return matches
 
@@ -49,7 +48,6 @@ module.exports = (robot) ->
     matchAllRegexp = /\b(([A-Za-z]+)-[\d]+)\b/gi
 
     for match in matchAllRegexp.execAll(msg.message.text)
-      console.log(match)
       msg.match = match
       getIssues(msg)
 
