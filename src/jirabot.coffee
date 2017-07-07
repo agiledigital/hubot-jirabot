@@ -47,7 +47,14 @@ module.exports = (robot) ->
 
     matchAllRegexp = /\b(([A-Za-z]+)-[\d]+)\b/gi
 
+    # used for filtering out duplicates
+    alreadySent = []
+
     for match in matchAllRegexp.execAll(msg.message.text)
+      ticket = match[1].toUpperCase()
+      if alreadySent.indexOf(ticket) != -1
+        continue
+      alreadySent.push(ticket)
       msg.match = match
       getIssues(msg)
 
